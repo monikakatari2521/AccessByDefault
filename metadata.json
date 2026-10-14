@@ -1,0 +1,6 @@
+{
+  "name": "Accessibility Audit Studio & Voice Assistant",
+  "description": "Automated web accessibility auditing tool powered by Playwright Chromium and axe-core, with real-time aria-live progress tracking, WCAG AAA reports, and Gemini TTS voice briefings.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

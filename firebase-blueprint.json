@@ -1,0 +1,114 @@
+{
+  "entities": {
+    "Scan": {
+      "title": "Scan",
+      "description": "Accessibility audit scan record with metadata and summary counts",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unguessable unique scan identifier",
+          "minLength": 8,
+          "maxLength": 128
+        },
+        "url": {
+          "type": "string",
+          "description": "Target audited webpage URL",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "status": {
+          "type": "string",
+          "description": "Current scan execution status",
+          "enum": ["pending", "navigating", "auditing", "completed", "failed"]
+        },
+        "startedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO timestamp when the audit initiated"
+        },
+        "finishedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO timestamp when the audit completed or failed"
+        },
+        "error": {
+          "type": "string",
+          "description": "Error diagnostic message if the scan failed",
+          "maxLength": 2000
+        },
+        "axeVersion": {
+          "type": "string",
+          "description": "Version of the axe-core engine used",
+          "maxLength": 32
+        },
+        "summaryCounts": {
+          "type": "object",
+          "description": "Summary numbers for violations, passes, and severity breakdown"
+        },
+        "findings": {
+          "type": "array",
+          "description": "Structured accessibility violation items"
+        }
+      },
+      "required": ["id", "url", "status", "startedAt"]
+    },
+    "Finding": {
+      "title": "Finding",
+      "description": "Individual accessibility violation details",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique finding ID",
+          "minLength": 8,
+          "maxLength": 128
+        },
+        "ruleId": {
+          "type": "string",
+          "description": "Axe rule identifier (e.g. color-contrast)",
+          "maxLength": 128
+        },
+        "impact": {
+          "type": "string",
+          "description": "Severity tier",
+          "enum": ["critical", "serious", "moderate", "minor"]
+        },
+        "description": {
+          "type": "string",
+          "description": "Human-readable issue explanation",
+          "maxLength": 1000
+        },
+        "help": {
+          "type": "string",
+          "description": "Actionable remediation summary",
+          "maxLength": 500
+        },
+        "helpUrl": {
+          "type": "string",
+          "description": "Documentation URL for fixing the violation",
+          "maxLength": 2048
+        },
+        "tags": {
+          "type": "array",
+          "description": "WCAG standard tags and category markers"
+        },
+        "nodes": {
+          "type": "array",
+          "description": "Array of affected DOM nodes and code snippets"
+        }
+      },
+      "required": ["id", "ruleId", "impact", "description"]
+    }
+  },
+  "firestore": {
+    "/scans/{scanId}": {
+      "schema": "Scan",
+      "description": "Accessibility scan reports reachable only by unguessable ID. Client enumeration and writes forbidden."
+    },
+    "/scans/{scanId}/findings/{findingId}": {
+      "schema": "Finding",
+      "description": "Subcollection storing violation findings for larger scan reports."
+    }
+  }
+}

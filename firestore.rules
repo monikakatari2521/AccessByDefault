@@ -1,0 +1,29 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default-deny global catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() >= 8 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Scans are reachable only by unguessable ID.
+    // List queries on the scans collection are strictly forbidden to prevent enumeration and query scraping.
+    // All writes must go through the backend API.
+    match /scans/{scanId} {
+      allow get: if isValidId(scanId);
+      allow list: if false;
+      allow create, update, delete: if false;
+
+      match /findings/{findingId} {
+        allow get: if isValidId(scanId) && isValidId(findingId);
+        allow list: if isValidId(scanId);
+        allow create, update, delete: if false;
+      }
+    }
+  }
+}

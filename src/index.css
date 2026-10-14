@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-canvas: #090D16;
+    --bg-surface: #131B2E;
+    --bg-surface-elevated: #1B253D;
+    --border-subtle: #1E293B;
+    --border-strong: #334155;
+    --text-primary: #F8FAFC;
+    --text-secondary: #94A3B8;
+    --text-muted: #64748B;
+    --accent-sky: #38BDF8;
+    --accent-critical: #EF4444;
+    --accent-serious: #F97316;
+    --accent-moderate: #FBBF24;
+    --accent-minor: #60A5FA;
+    --accent-pass: #34D399;
+  }
+
+  body {
+    background-color: var(--bg-canvas);
+    color: var(--text-primary);
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+
+  h1, h2, h3, h4, .font-display {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+
+  code, pre, .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+    font-feature-settings: "tnum" 1;
+  }
+
+  /* High contrast focus ring for WCAG AAA accessibility */
+  :focus-visible {
+    outline: 2px solid #38BDF8;
+    outline-offset: 2px;
+  }
+}
+
+/* Custom accessible scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #090D16;
+}
+::-webkit-scrollbar-thumb {
+  background: #1E293B;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}

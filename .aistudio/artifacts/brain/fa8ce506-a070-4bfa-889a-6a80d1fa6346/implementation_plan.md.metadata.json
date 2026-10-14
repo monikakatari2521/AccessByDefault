@@ -1,0 +1,6 @@
+{
+  "summary": "Architecture and implementation plan for the Accessibility Scanner with Playwright Chromium, axe-core, Firestore persistence, real-time live region announcements, and backend Gemini TTS.",
+  "updatedAt": "2026-10-14T13:18:13.406580812Z",
+  "requestFeedback": true,
+  "userFacing": true
+}
